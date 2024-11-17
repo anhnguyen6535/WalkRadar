@@ -51,13 +51,14 @@ export default function SpatialAwareness() {
           const distance = calculateDistance(faceWidth, focalLength, width);
 
           const relativeX = (x + width / 2) / video.videoWidth;
-          const {age, gender} = det
+          const {gender, expressions} = det
+          const [expression, value] = getMaxExpression(expressions) 
 
           return {
             distance,
             relativeX,
-            age,
-            gender
+            gender,
+            expression
           };
         });
 
@@ -82,6 +83,12 @@ export default function SpatialAwareness() {
     return (faceWidth * focalLength) / pixelWidth;
   };
 
+  const getMaxExpression = (expressions) => {
+    return Object.entries(expressions).reduce((max, current) => {
+      return current[1] > max[1] ? current : max;
+    });
+  };  
+
   return (
     <div style={{ display: 'flex' }}>
       {/* Video Feed */}
@@ -99,7 +106,6 @@ export default function SpatialAwareness() {
 
       {/* Spatial Awareness Display */}
       <div style={{ flex: 1, position: 'relative', background: '#000' }}>
-        {/* <Display positions={positions} /> */}
         <Display positions={positions} />
       </div>
     </div>
