@@ -11,7 +11,7 @@
    - **Expression**
 
 ## Tech Stack  
-- **Face-api.js** for real-time face detection and processing.  
+- [**Face-api.js**](https://www.npmjs.com/package/face-api.js/v/0.22.2) for real-time face detection and processing.  
 
 ## Assets  
 - **Human symbols**: Designed in Figma.  
