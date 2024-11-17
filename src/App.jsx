@@ -1,5 +1,5 @@
 import React from 'react';
-import FaceDetection from './Components/FaceDetection';
+// import FaceDetection from './Components/FaceDetection';
 import SpatialAwareness from './Components/SpatialAwareness';
 
 const App = () => {
