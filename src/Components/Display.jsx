@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import * as faceapi from 'face-api.js';
 
 export default function Display({ positions }) {
     const canvasRef = useRef(null);
@@ -34,12 +33,12 @@ export default function Display({ positions }) {
         ctx.fill();
   
         // Draw the orientation arrow pointing downwards (relative direction)
-        ctx.strokeStyle = distance <= 100 ? 'red' : 'blue';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(canvasX, canvasY);
-        ctx.lineTo(canvasX, canvasY + 20); // Arrow pointing down
-        ctx.stroke();
+        // ctx.strokeStyle = distance <= 100 ? 'red' : 'blue';
+        // ctx.lineWidth = 2;
+        // ctx.beginPath();
+        // ctx.moveTo(canvasX, canvasY);
+        // ctx.lineTo(canvasX, canvasY - 20); // Arrow pointing down
+        // ctx.stroke();
       });
     }, [positions]);
   
