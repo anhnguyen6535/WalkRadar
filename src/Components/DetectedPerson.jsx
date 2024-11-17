@@ -1,5 +1,5 @@
 import React from 'react'
-import { FemaleSymbol, HappyFemale, MaleSymbol } from './Symbol';
+import { AngryFemale, AngryMale, DisgustedFemale, DisgustedMale, FemaleSymbol, HappyFemale, HappyMale, MaleSymbol, SadFemale, SadMale, SuprisedFemale, SuprisedMale } from './Symbol';
 
 export default function DetectedPerson({canvasWidth, canvasHeight, height, distance, relativeX, gender, expression}) {
   // Map distance to y position
@@ -16,6 +16,14 @@ export default function DetectedPerson({canvasWidth, canvasHeight, height, dista
                 return <FemaleSymbol color={color}/>
             case 'happy':
                 return <HappyFemale  color={color}/>
+            case 'sad':
+                return <SadFemale  color={color}/>
+            case 'angry':
+                return <AngryFemale color={color}/>
+            case 'surprised':
+                return <SuprisedFemale  color={color}/>
+            case 'disgusted':
+                return <DisgustedFemale  color={color}/>
             default:
                 return <FemaleSymbol color={color}/>
         }
@@ -25,7 +33,15 @@ export default function DetectedPerson({canvasWidth, canvasHeight, height, dista
             case 'neutral':
                 return <MaleSymbol color={color}/>
             case 'happy':
-                return <HappyFemale  color={color}/>
+                return <HappyMale  color={color}/>
+            case 'sad':
+                return <SadMale  color={color}/>
+            case 'angry':
+                return <AngryMale color={color}/>
+            case 'surprised':
+                return <SuprisedMale  color={color}/>
+            case 'disgusted':
+                return <DisgustedMale  color={color}/>
             default:
                 return <MaleSymbol color={color}/>
         }
