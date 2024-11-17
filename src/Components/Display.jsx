@@ -42,8 +42,8 @@ export default function Display({ positions }) {
         }}
       />
       {/* Render detected persons */}
-      {positions.map(({ distance, relativeX, gender }, index) => (
-        <DetectedPerson canvasWidth={width} canvasHeight={height} key={index} distance={distance} relativeX={relativeX} gender={gender} />
+      {positions.map(({ distance, relativeX, gender, expression }, index) => (
+        <DetectedPerson canvasWidth={width} canvasHeight={height} key={index} distance={distance} relativeX={relativeX} gender={gender} expression={expression} />
       ))}
     </div>
   );

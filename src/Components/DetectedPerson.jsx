@@ -1,7 +1,7 @@
 import React from 'react'
 import { FemaleSymbol, MaleSymbol } from './Symbol';
 
-export default function DetectedPerson({canvasWidth, canvasHeight, height, distance, relativeX, gender}) {
+export default function DetectedPerson({canvasWidth, canvasHeight, height, distance, relativeX, gender, expression}) {
   // Map distance to y position
   const canvasX = relativeX * canvasWidth;
   const canvasY = mapDistanceToYPosition(distance, canvasHeight);
