@@ -12,6 +12,7 @@ export default function SpatialAwareness() {
         faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
         faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
         faceapi.nets.faceExpressionNet.loadFromUri('/models'),
+        faceapi.nets.ageGenderNet.loadFromUri('/models'),
       ]);
       startVideo();
     };
@@ -40,7 +41,8 @@ export default function SpatialAwareness() {
       const intervalId = setInterval(async () => {
         const detections = await faceapi
           .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
-          .withFaceExpressions();
+          .withFaceExpressions()
+          .withAgeAndGender();
 
         const updatedPositions = detections.map(det => {
           const { width, x } = det.detection.box;
@@ -49,10 +51,13 @@ export default function SpatialAwareness() {
           const distance = calculateDistance(faceWidth, focalLength, width);
 
           const relativeX = (x + width / 2) / video.videoWidth;
+          const {age, gender} = det
 
           return {
             distance,
             relativeX,
+            age,
+            gender
           };
         });
 
