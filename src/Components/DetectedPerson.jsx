@@ -1,5 +1,5 @@
 import React from 'react'
-import { FemaleSymbol, MaleSymbol } from './Symbol';
+import { FemaleSymbol, HappyFemale, MaleSymbol } from './Symbol';
 
 export default function DetectedPerson({canvasWidth, canvasHeight, height, distance, relativeX, gender, expression}) {
   // Map distance to y position
@@ -8,6 +8,29 @@ export default function DetectedPerson({canvasWidth, canvasHeight, height, dista
 
   // Determine the color based on distance
   const color = distance <= 100 ? 'red' : 'blue';
+
+  const getSymbolComponent = () =>{
+    if (gender === 'female'){
+        switch (expression){
+            case 'neutral':
+                return <FemaleSymbol color={color}/>
+            case 'happy':
+                return <HappyFemale  color={color}/>
+            default:
+                return <FemaleSymbol color={color}/>
+        }
+    }
+    else{
+        switch (expression){
+            case 'neutral':
+                return <MaleSymbol color={color}/>
+            case 'happy':
+                return <HappyFemale  color={color}/>
+            default:
+                return <MaleSymbol color={color}/>
+        }
+    }
+  }
 
   return (
     <div
@@ -19,10 +42,7 @@ export default function DetectedPerson({canvasWidth, canvasHeight, height, dista
         height: 20,
       }}
     >
-      {gender === 'female' 
-        ? <FemaleSymbol color={color} /> 
-        : <MaleSymbol color={color} />
-      }
+      {getSymbolComponent()}
     </div>
   );
 }
