@@ -12,6 +12,7 @@ export default function SpatialAwareness() {
         faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
         faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
         faceapi.nets.faceExpressionNet.loadFromUri('/models'),
+        faceapi.nets.ageGenderNet.loadFromUri('/models'),
       ]);
       startVideo();
     };
@@ -40,7 +41,8 @@ export default function SpatialAwareness() {
       const intervalId = setInterval(async () => {
         const detections = await faceapi
           .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
-          .withFaceExpressions();
+          .withFaceExpressions()
+          .withAgeAndGender();
 
         const updatedPositions = detections.map(det => {
           const { width, x } = det.detection.box;
@@ -49,10 +51,14 @@ export default function SpatialAwareness() {
           const distance = calculateDistance(faceWidth, focalLength, width);
 
           const relativeX = (x + width / 2) / video.videoWidth;
+          const {gender, expressions} = det
+          const [expression, value] = getMaxExpression(expressions) 
 
           return {
             distance,
             relativeX,
+            gender,
+            expression
           };
         });
 
@@ -77,6 +83,12 @@ export default function SpatialAwareness() {
     return (faceWidth * focalLength) / pixelWidth;
   };
 
+  const getMaxExpression = (expressions) => {
+    return Object.entries(expressions).reduce((max, current) => {
+      return current[1] > max[1] ? current : max;
+    });
+  };  
+
   return (
     <div style={{ display: 'flex' }}>
       {/* Video Feed */}
@@ -94,61 +106,8 @@ export default function SpatialAwareness() {
 
       {/* Spatial Awareness Display */}
       <div style={{ flex: 1, position: 'relative', background: '#000' }}>
-        {/* <Display positions={positions} /> */}
         <Display positions={positions} />
       </div>
     </div>
   );
 }
-
-// function Display({ positions }) {
-//   const canvasRef = useRef(null);
-
-//   useEffect(() => {
-//     if (!canvasRef.current) return;
-
-//     const canvas = canvasRef.current;
-//     const ctx = canvas.getContext('2d');
-
-//     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-//     // Draw user dot
-//     ctx.fillStyle = 'green';
-//     ctx.beginPath();
-//     ctx.arc(canvas.width / 2, 10, 5, 0, Math.PI * 2);
-//     ctx.fill();
-
-//     // Draw detected persons
-//     positions.forEach(({ distance, relativeX }) => {
-//       const canvasX = relativeX * canvas.width;
-//       const canvasY = Math.min(200, distance * 5); // Scale for visibility
-//       ctx.fillStyle = distance <= 100 ? 'red' : 'blue';
-
-//       // Draw dot
-//       ctx.beginPath();
-//       ctx.arc(canvasX, canvasY, 10, 0, Math.PI * 2);
-//       ctx.fill();
-
-//       // Draw orientation arrow
-//       ctx.strokeStyle = distance <= 100 ? 'red' : 'blue';
-//       ctx.lineWidth = 2;
-//       ctx.beginPath();
-//       ctx.moveTo(canvasX, canvasY);
-//       ctx.lineTo(canvasX, canvasY - 20);
-//       ctx.stroke();
-//     });
-//   }, [positions]);
-
-//   return (
-//     <canvas
-//       ref={canvasRef}
-//       width={500}
-//       height={500}
-//       style={{
-//         width: '100%',
-//         height: '100%',
-//         display: 'block',
-//       }}
-//     />
-//   );
-// }
