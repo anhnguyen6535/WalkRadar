@@ -45,7 +45,7 @@ export default function Display({ positions }) {
           left: 0,
           width: '100%',
           height: '100vh',
-          backgroundImage: 'url(\'../public/background2.gif\')',
+          backgroundImage: 'url(\'/background2.gif\')',
           backgroundSize:'cover',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
