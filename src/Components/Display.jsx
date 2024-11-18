@@ -48,8 +48,7 @@ export default function Display({ positions }) {
           backgroundImage: 'url(\'../public/background2.gif\')',
           backgroundSize:'cover',
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center' 
-          // border: '1px solid blue'
+          backgroundPosition: 'center',
         }}
       />
       {/* Render detected persons */}
