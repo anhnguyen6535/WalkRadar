@@ -21,18 +21,18 @@ export default function SpatialAwareness() {
       navigator.getUserMedia(
         { video: {} },
         stream => {
-          if (videoRef.current) {
-            videoRef.current.srcObject = stream;
-          }
+          // Create the video element dynamically & store it in the ref
+          const video = document.createElement('video');
+          video.srcObject = stream;
+          video.play().then(() => {
+            videoRef.current = video;
+            handlePlay();
+          });
         },
         err => console.error(err)
       );
     };
 
-    loadModels();
-  }, []);
-
-  useEffect(() => {
     const handlePlay = () => {
       if (!videoRef.current) return;
 
@@ -51,32 +51,24 @@ export default function SpatialAwareness() {
           const distance = calculateDistance(faceWidth, focalLength, width);
 
           const relativeX = (x + width / 2) / video.videoWidth;
-          const {gender, expressions} = det
-          const [expression, value] = getMaxExpression(expressions) 
+          const { gender, expressions } = det;
+          const [expression] = getMaxExpression(expressions);
 
           return {
             distance,
             relativeX,
             gender,
-            expression
+            expression,
           };
         });
 
         setPositions(updatedPositions);
-      }, 100);
+      }, 200);
 
       return () => clearInterval(intervalId);
     };
 
-    if (videoRef.current) {
-      videoRef.current.addEventListener('play', handlePlay);
-    }
-
-    return () => {
-      if (videoRef.current) {
-        videoRef.current.removeEventListener('play', handlePlay);
-      }
-    };
+    loadModels();
   }, []);
 
   const calculateDistance = (faceWidth, focalLength, pixelWidth) => {
@@ -87,23 +79,10 @@ export default function SpatialAwareness() {
     return Object.entries(expressions).reduce((max, current) => {
       return current[1] > max[1] ? current : max;
     });
-  };  
+  };
 
   return (
-    <div style={{ display: 'flex' }}>
-      {/* Video Feed */}
-      <div style={{ flex: 1 }}>
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          style={{
-            width: '100%',
-            height: 'auto',
-          }}
-        />
-      </div>
-
+    <div style={{ display: 'flex'}}>
       {/* Spatial Awareness Display */}
       <div style={{ flex: 1, position: 'relative', background: '#000' }}>
         <Display positions={positions} />
