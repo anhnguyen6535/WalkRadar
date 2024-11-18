@@ -59,6 +59,7 @@ export default function DetectedPerson({ canvasWidth, canvasHeight, distance, re
       }}
     >
       {getSymbolComponent()}
+      <p style={{color: 'white'}}>{(distance/100).toFixed(2)}m away</p>
     </div>
   );
 }
