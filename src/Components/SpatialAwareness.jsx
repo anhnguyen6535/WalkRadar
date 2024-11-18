@@ -63,7 +63,7 @@ export default function SpatialAwareness() {
         });
 
         setPositions(updatedPositions);
-      }, 100);
+      }, 200);
 
       return () => clearInterval(intervalId);
     };
@@ -82,7 +82,7 @@ export default function SpatialAwareness() {
   };
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex'}}>
       {/* Spatial Awareness Display */}
       <div style={{ flex: 1, position: 'relative', background: '#000' }}>
         <Display positions={positions} />
