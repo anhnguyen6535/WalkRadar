@@ -20,7 +20,7 @@ export default function Display({ positions }) {
     // Draw user dot (top center)
     ctx.fillStyle = 'green';
     ctx.beginPath();
-    ctx.arc(canvas.width / 2, 10, 5, 0, Math.PI * 2);
+    ctx.arc(canvas.width / 2, 20, 10, 0, Math.PI * 2);
     ctx.fill();
   }, []);
 
@@ -45,7 +45,11 @@ export default function Display({ positions }) {
           left: 0,
           width: '100%',
           height: '100vh',
-          border: '1px solid blue'
+          backgroundImage: 'url(\'../public/background2.gif\')',
+          backgroundSize:'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center' 
+          // border: '1px solid blue'
         }}
       />
       {/* Render detected persons */}
