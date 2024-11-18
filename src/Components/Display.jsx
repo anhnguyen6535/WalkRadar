@@ -12,9 +12,12 @@ export default function Display({ positions }) {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
+    canvas.width = canvas.parentElement.offsetWidth;
+    canvas.height = canvas.parentElement.offsetHeight;
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw user dot (user is always at the top center)
+    // Draw user dot (top center)
     ctx.fillStyle = 'green';
     ctx.beginPath();
     ctx.arc(canvas.width / 2, 10, 5, 0, Math.PI * 2);
@@ -25,9 +28,10 @@ export default function Display({ positions }) {
     <div
       style={{
         position: 'relative',
-        width: width,
-        height: height,
-        border: '1px solid black',
+        width: '100%',
+        height: '100vh',
+        backgroundColor: 'white',
+        // border: '1px solid black',
         overflow: 'hidden',
       }}
     >
@@ -39,14 +43,25 @@ export default function Display({ positions }) {
           position: 'absolute',
           top: 0,
           left: 0,
+          width: '100%',
+          height: '100vh',
+          border: '1px solid blue'
         }}
       />
       {/* Render detected persons */}
       {positions.map(({ distance, relativeX, gender, expression }, index) => (
-        <DetectedPerson canvasWidth={width} canvasHeight={height} key={index} distance={distance} relativeX={relativeX} gender={gender} expression={expression} />
+        (distance < 500) &&
+        <DetectedPerson key={index} 
+          canvasWidth={canvasRef.current?.width || 500}
+          canvasHeight={canvasRef.current?.height || 500} 
+          distance={distance} 
+          relativeX={relativeX} 
+          gender={gender} 
+          expression={expression} />
       ))}
     </div>
   );
 }
+
 
 
