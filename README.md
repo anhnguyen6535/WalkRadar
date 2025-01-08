@@ -15,4 +15,7 @@
 
 ## Assets  
 - **Human symbols**: Designed in Figma.  
-- **Web Logo**: Sourced from [Radar SVG](https://www.svgrepo.com/svg/128396/radar).  
+- **Web Logo**: Sourced from [Radar SVG](https://www.svgrepo.com/svg/128396/radar).
+
+## Credits
+Special thanks to Tyler Potts for his [tutorial](https://www.youtube.com/watch?v=4sLUfUGLEp0) of how to access camera in React JS!
